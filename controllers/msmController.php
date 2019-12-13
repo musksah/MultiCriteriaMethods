@@ -58,7 +58,7 @@ function PayOffMatrix($data)
             $table_form .= "
             <td>
                 <div class='form-group'>
-                    <input type='text' class='form-control' id='criterion" . $i . "[U" . $j . "]' placeholder='Enter Number' name='criterion" . $i . "[U" . $j . "]'>
+                    <input type='text' class='form-control' id='criterion" . $i . "[A" . $j . "]' placeholder='Enter Number' name='criterion" . $i . "[A" . $j . "]'>
                 </div>
             </td>";
         }
@@ -77,7 +77,7 @@ function PayOffMatrix($data)
     for ($j = 1; $j < $colums + 1; $j++) {
         $table_form .= '
             <th scope="col">
-                <input type="text" class="form-control" name="score'.$i.'" readonly>
+                <input type="text" class="form-control" name="score'.$j.'" readonly>
             </th>';
     }
     $table_form .= "</tfoot>";
