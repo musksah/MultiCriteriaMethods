@@ -65,14 +65,6 @@
           </div>
         </div>
       </li>
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
-
-      <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
-
     </ul>
     <!-- End of Sidebar -->
 
@@ -167,10 +159,138 @@
                     <h6 class="m-0 font-weight-bold text-primary">PayOff Matrix</h6>
                   </div>
                   <div class="card-body" id="card-body-payoff-matrix">
+                    <!-- <form action="controllers/maximaxcontroller.php" method="POST" id="form_payoff_data">
+                      <input type="hidden" name="funcion" value="sumarize">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Land Purchased at Locations</th>
+                            <th scope="col">
+                              <h3 class="text-center">A</h3>
+                            </th>
+                            <th scope="col">
+                              <h3 class="text-center">B</h3>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="text-center">
+                              <h3>A</h3>
+                            </td>
+                            <td class="">
+                              <div class="form-group">
+                                <input type="text" class="form-control" id="A[A]" aria-describedby="emailHelp" placeholder="Enter Number" name="A[A]">
+                              </div>
+                            </td>
+                            <td class="">
+                              <div class="form-group">
+                                <input type="text" class="form-control" id="B[A]" aria-describedby="emailHelp" placeholder="Enter Number" name="B[A]">
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="  text-center">
+                              <h3>B</h3>
+                            </td>
+                            <td class="">
+                              <div class="form-group">
+                                <input type="text" class="form-control" id="A[B]" placeholder="Enter Number" name="A[B]">
+                              </div>
+                            </td>
+                            <td class="">
+                              <div class="form-group">
+                                <input type="text" class="form-control" id="B[B]" aria-describedby="emailHelp" placeholder="Enter Number" name="B[B]">
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class=" text-center">
+                              <h3>A&B</h3>
+                            </td>
+                            <td class="">
+                              <div class="form-group">
+                                <input type="text" class="form-control" id="A[AB]" aria-describedby="emailHelp" placeholder="Enter Number" name="A[AB]">
+                              </div>
+                            </td>
+                            <td class="">
+                              <div class="form-group">
+                                <input type="text" class="form-control" id="B[AB]" aria-describedby="emailHelp" placeholder="Enter Number" name="B[AB]">
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="  text-center">
+                              <h3>None</h3>
+                            </td>
+                            <td class="">
+                              <div class="form-group">
+                                <input type="text" class="form-control" id="A[none]" placeholder="Enter Number" name="A[none]">
+                              </div>
+                            </td>
+                            <td class="">
+                              <div class="form-group">
+                                <input type="text" class="form-control" id="B[none]" aria-describedby="emailHelp" placeholder="Enter Number" name="B[none]">
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                          <tr>
+                            <td class="  text-center">
+                              <h3>Probability</h3>
+                            </td>
+                            <td class="">
+                              <div class="form-group">
+                                <input type="text" class="form-control" id="prob[A]" placeholder="Enter Probability" name="prob[A]">
+                              </div>
+                            </td>
+                            <td class="">
+                              <div class="form-group">
+                                <input type="text" class="form-control" id="prob[B]" aria-describedby="emailHelp" placeholder="Enter Probability" name="prob[B]">
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="text-center">
+                              <button type="submit" class="btn btn-primary">Calcular</button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </form> -->
                   </div>
                 </div>
               </div>
-  
+              <div class="col-md-9 offset-md-1">
+
+                <!-- Default Card Example -->
+                <div class="card mb-4">
+                  <div class="card-header">
+                    Regreat Matrix Desicion
+                  </div>
+                  <div class="card-body" id="matrix_regreat">
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-9 offset-md-1">
+
+                <!-- Basic Card Example -->
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Maximum</h6>
+                  </div>
+                  <div class="card-body">
+                    <?php
+                    if (isset($_GET['maximo'])) {
+                      echo "<p> El máximo es: " . $_GET['maximo'] . "</p>";
+                    }
+                    ?>
+                  </div>
+                </div>
+
+              </div>
               <!-- /.container-fluid -->
 
             </div>
@@ -222,7 +342,7 @@
 
         <!-- Core plugin JavaScript-->
         <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>          
         <!-- Custom scripts for all pages-->
         <script src="js/sb-admin-2.min.js"></script>
         <script src="js/main.js"></script>

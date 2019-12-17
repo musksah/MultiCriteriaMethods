@@ -10,22 +10,25 @@
 
     // Listen for the jQuery ready event on the document
     $(function () {
-        // The DOM is ready!
-        // $("#form_payoff_data").submit(function (event) {
-        //     event.preventDefault();
-        //     debugger
-        //     $.ajax({
-        //         method: "POST",
-        //         url: "controllers/maximaxcontroller.php",
-        //         data: $(this).serialize()
-        //     }).done(function (data) {
-        //         console.log(data);
-        //         $("#matrix_regreat").html(data);
-        //     });
-        // });
 
-        $("#btn_submit_payoff").on('click', function(){
-            alert("hola");
+        $("#customized_alternatives").on('change', function () {
+            var table_alternatives = "";
+            if (this.checked) {
+                let alternatives = parseInt($("#num_alterns").val());
+                table_alternatives = '<hr class="sidebar-divider my-0"> <h4 class="text-center text-primary" style="text-decoration:underline; margin-bottom: 25px; margin-top: 20px;">Customize Names</h4>';
+                for (let index = 0; index < alternatives; index++) {
+                    table_alternatives = table_alternatives + '' +
+                        '<div class="row">' +
+                        '   <div class="col-md-4" style="margin-top: 10px">' +
+                        '       <label for="num_alterns" class="float-right"> Alternative Name:</label>' +
+                        '   </div>' +
+                        '   <div class="col-md-8">' +
+                        '    <input class="form-control" type="text" name="alternative[]" placeholder="Enter the text" required>' +
+                        '   </div>' +
+                        '</div>';
+                }
+            }
+            $("#div-name-alternatives").html(table_alternatives)
         });
 
         $("#form_matrix_generator").submit(function (event) {
@@ -33,11 +36,10 @@
             event.preventDefault();
             $.ajax({
                 method: "POST",
-                url: "controllers/maximaxcontroller.php",
+                url: "controllers/expectRegreatController.php",
                 data: $(this).serialize()
             }).done(function (data) {
                 console.log(data);
-                
                 $("#card-body-payoff-matrix").html(data);
             });
         });
