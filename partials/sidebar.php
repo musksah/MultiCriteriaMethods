@@ -28,27 +28,12 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-table"></i>
-            <span>Probabilistic Methods</span>
+            <span>Multicriteria Decision</span>
         </a>
         <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Methods:</h6>
-                <a class="collapse-item" href="expectedvalue.php">Expected Value</a>
-                <a class="collapse-item" href="expectRegreat.php">Expected Regreat</a>
-                <a class="collapse-item" href="sensitivity_analisis.php">Sensibility Analysis</a>
-            </div>
-        </div>
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Non-Probabilistic Methods</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Metodos:</h6>
-                <a class="collapse-item" href="maximax.php">MaxiMax</a>
-                <a class="collapse-item" href="maximin.php">MaxiMin</a>
-                <a class="collapse-item" href="minimaxregreat.php">MiniMax Regreat</a>
-              
+                <a class="collapse-item" href="analytic_h_process.php">AHP Players</a>
             </div>
         </div>
     </li>
