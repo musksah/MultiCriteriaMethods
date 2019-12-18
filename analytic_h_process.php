@@ -111,17 +111,20 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <p style="font-size: 1.2em;" class="text-gray-700">1. Crear la matriz pareada de comparación.</p>
                             <div class="col-md-12" id="payoff_matrix_container">
                                 <!-- Default Card Example -->
                                 <div class="card mb-4">
                                     <div class="card-header">
-                                        <h6 class="m-0 font-weight-bold text-primary">PayOff Matrix</h6>
+                                        <h6 class="m-0 font-weight-bold text-primary">Ponderación Variables Principales</h6>
                                     </div>
                                     <div class="card-body" id="card_pair_waise_main_matrix">
 
                                     </div>
                                 </div>
+                            </div>
+                            <div id="pair_waise_all_matrix_criterions">
+
                             </div>
 
                             <div class="col-md-12">

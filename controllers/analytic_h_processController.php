@@ -194,6 +194,130 @@ function matrixRegreat($mayor_a, $mayor_b, $a, $b)
     echo json_encode($matrix_regreat);
 }
 
+function generateMatrixVarCriterions($data){
+    // print_r($data);
+    // die;
+    $var1 = $data['explain_var'];
+    $var2 = $data['explain_var2'];
+    $variable1_criters = $data['num_criters1'];
+    $variable2_criters = $data['num_criters2'];
+    $variable1_alternative1 = $data['alternative'];
+    $variable1_alternative2 = $data['alternative2'];
+    //print_r($variable1_alternative);
+    //die;
+    for ($w = 0; $w < $variable1_criters ; $w++) { 
+        $table_pair_w_criterions = "
+        <div class='col-md-12'>
+            <div class='card mb-4'>
+                <div class='card-header'>
+                    <h6 class='m-0 font-weight-bold text-primary'>Ponderación de Variables de ". $var1."</h6>
+                </div>
+                <div class='card-body'>
+                    <table class='table table-striped'>
+                        <thead class='bg-warning' style='color:white;'>
+                            <th></th>";
+                            for ($i=0; $i < $variable1_criters ; $i++) { 
+                                $table_pair_w_criterions .= "
+                                <th><center>".$variable1_alternative1[$i]."</center></th>";
+                            }
+                    $table_pair_w_criterions .="
+                            <th>Vector Propio</th>
+                        </thead>
+                        <tbody>";  
+                            for ($i = 0; $i < $variable1_criters ; $i++) { 
+                            $table_pair_w_criterions .= "
+                            <tr>
+                                <td>".$variable1_alternative1[$i]."</td>";
+                            for ($j = 0; $j < $variable1_criters; $j++) { 
+                                if($i == $j){
+                                    $table_pair_w_criterions .= "
+                                <td><input type='number' class='form-control input_vars' name='cell_1_".$i.$j."' id='cell_1_".$i.$j."' value='1' data-row='$i' data-col='$j' data-prefijo='cell_1_' readonly></td>";
+                                }elseif($j>$i){
+                                    $table_pair_w_criterions .= "
+                                <td><input type='number' class='form-control input_vars' name='cell_1_".$i.$j."' id='cell_1_".$i.$j."' data-row='$i' data-col='$j' data-prefijo='cell_1_'></td>";
+                                }else{
+                                    $table_pair_w_criterions .= "
+                                <td><input type='number' class='form-control input_vars' name='cell_1_".$i.$j."' id='cell_1_".$i.$j."' data-row='$i' data-col='$j' data-prefijo='cell_1_' readonly></td>";
+                                }
+                            }
+                            $table_pair_w_criterions .= "
+                                <td><input type='number' class='form-control input_vars' name='cellvp_1_".$i."' id='cellvp_1_".$i."' data-row='$i' readonly><td>
+                            </tr>";
+                            }     
+                    $table_pair_w_criterions .= "            
+                        </tbody>
+                    </table>
+                </div>   
+            </div>
+        </div>
+        <script>
+        $('.input_vars').on('change', function () {
+            let element = $(this)
+            let col = element.data('col');
+            let row = element.data('row');
+            let prefijo = element.data('prefijo');
+            let value = parseFloat(element.val());
+            let selector = '#'+prefijo+''+col+''+row;
+            $(selector).val(1/value)
+        });
+        </script>";
+    }
+    $tables[]=$table_pair_w_criterions;
+
+
+
+    for ($w = 0; $w < $variable2_criters ; $w++) { 
+        $table_pair_w_criterions = "
+        <div class='col-md-12'>
+            <div class='card mb-4'>
+                <div class='card-header'>
+                    <h6 class='m-0 font-weight-bold text-primary'>Ponderación de Variables de ". $var1."</h6>
+                </div>
+                <div class='card-body'>
+                    <table class='table table-striped'>
+                        <thead class='bg-warning' style='color:white;'>
+                            <th></th>";
+                            for ($i=0; $i < $variable2_criters ; $i++) { 
+                                $table_pair_w_criterions .= "
+                                <th><center>".$variable1_alternative2[$i]."</center></th>";
+                            }
+                    $table_pair_w_criterions .="
+                            <th>Vector Propio</th>
+                        </thead>
+                        <tbody>";  
+                            for ($i = 0; $i < $variable2_criters ; $i++) { 
+                            $table_pair_w_criterions .= "
+                            <tr>
+                                <td>".$variable1_alternative2[$i]."</td>";
+                            for ($j = 0; $j < $variable2_criters; $j++) { 
+                                if($i == $j){
+                                    $table_pair_w_criterions .= "
+                                <td><input type='number' class='form-control input_vars' name='cell_2_".$i.$j."' id='cell_2_".$i.$j."' value='1' data-row='$i' data-col='$j' data-prefijo='cell_2_' readonly></td>";
+                                }elseif($j>$i){
+                                    $table_pair_w_criterions .= "
+                                <td><input type='number' class='form-control input_vars' name='cell_2_".$i.$j."' id='cell_2_".$i.$j."' data-row='$i' data-col='$j' data-prefijo='cell_2_'></td>";
+                                }else{
+                                    $table_pair_w_criterions .= "
+                                <td><input type='number' class='form-control input_vars' name='cell_2_".$i.$j."' id='cell_2_".$i.$j."' data-row='$i' data-col='$j' data-prefijo='cell_2_' readonly></td>";
+                                }
+                            }
+                            $table_pair_w_criterions .= "
+                                <td><input type='number' class='form-control input_vars' name='cellvp_2_".$i."' id='cellvp_".$i."' data-row='$i' readonly><td>
+                            </tr>";
+                            }     
+                    $table_pair_w_criterions .= "            
+                        </tbody>
+                    </table>
+                </div>   
+            </div>
+        </div>";
+    }
+    $tables[]=$table_pair_w_criterions;
+    // print_r($tables);
+    // die;
+    return $tables;
+}
+
 function pairwiseComparisonMatrix($data)
 {
     $explain_var = $data['explain_var'];
@@ -204,13 +328,26 @@ function pairwiseComparisonMatrix($data)
         var table_alternatives = "";
         let valVar1 = $("#v1xv2").val();
         let invvalVar1 = 1/valVar1; 
-        debugger
         $("#v2xv1").val(invvalVar1)
+        let c_0_0 = parseFloat($("#v1xv1").val())
+        let c_0_1 = parseFloat($("#v1xv2").val())
+        let c_1_0 = parseFloat($("#v2xv1").val())
+        let c_1_1 = parseFloat($("#v2xv2").val())
+        let sumc1 = (c_0_0 + c_1_0);
+        let sumc2 = (c_0_1 + c_1_1);
+        let nC_0_0 = c_0_0/sumc1;
+        let nC_0_1 = c_0_1/sumc2;
+        let nC_1_0 = c_1_0/sumc1;
+        let nC_1_1 = c_1_1/sumc2;
+        f1Prom = (nC_0_0+nC_0_1)/2
+        f2Prom = (nC_1_0+nC_1_1)/2
+        $("#v1vp").val(f1Prom)
+        $("#v2vp").val(f2Prom)
     });
     </script>';
     $table_pair_w_main .= "
     <table class='table table-striped'>
-        <thead>
+        <thead class='bg-primary' style='color:white;'>
             <th></th>
             <th><center>$explain_var</center></th>
             <th><center>$explain_var2</center></th>
@@ -231,7 +368,13 @@ function pairwiseComparisonMatrix($data)
             </tr>
         </tbody>
     </table>";
-    echo json_encode($table_pair_w_main);
+
+    $table_critetions = generateMatrixVarCriterions($data);
+
+    echo json_encode([
+        'table_main'=>$table_pair_w_main,
+        'table_criterion'=>$table_critetions
+    ]);
     // if (!empty($data['alternative'])) {
     //     $alternatives_name = $data['alternative'];
     // }
