@@ -213,6 +213,7 @@ function generateMatrixVarCriterions($data){
                     <h6 class='m-0 font-weight-bold text-primary'>Ponderación de Variables de ". $var1."</h6>
                 </div>
                 <div class='card-body'>
+                    <div class='table-responsive'>
                     <table class='table table-striped'>
                         <thead class='bg-warning' style='color:white;'>
                             <th></th>";
@@ -221,7 +222,7 @@ function generateMatrixVarCriterions($data){
                                 <th><center>".$variable1_alternative1[$i]."</center></th>";
                             }
                     $table_pair_w_criterions .="
-                            <th>Vector Propio</th>
+                            <th><center>Vector Propio</center></th>
                         </thead>
                         <tbody>";  
                             for ($i = 0; $i < $variable1_criters ; $i++) { 
@@ -247,6 +248,7 @@ function generateMatrixVarCriterions($data){
                     $table_pair_w_criterions .= "            
                         </tbody>
                     </table>
+                    </div>
                 </div>   
             </div>
         </div>
@@ -274,6 +276,7 @@ function generateMatrixVarCriterions($data){
                     <h6 class='m-0 font-weight-bold text-primary'>Ponderación de Variables de ". $var1."</h6>
                 </div>
                 <div class='card-body'>
+                    <div class='table-responsive'>
                     <table class='table table-striped'>
                         <thead class='bg-warning' style='color:white;'>
                             <th></th>";
@@ -282,7 +285,7 @@ function generateMatrixVarCriterions($data){
                                 <th><center>".$variable1_alternative2[$i]."</center></th>";
                             }
                     $table_pair_w_criterions .="
-                            <th>Vector Propio</th>
+                            <th><center>Vector Propio</center></th>
                         </thead>
                         <tbody>";  
                             for ($i = 0; $i < $variable2_criters ; $i++) { 
@@ -308,6 +311,7 @@ function generateMatrixVarCriterions($data){
                     $table_pair_w_criterions .= "            
                         </tbody>
                     </table>
+                    </div>
                 </div>   
             </div>
         </div>";
@@ -346,6 +350,7 @@ function pairwiseComparisonMatrix($data)
     });
     </script>';
     $table_pair_w_main .= "
+    <div class='table-responsive'>
     <table class='table table-striped'>
         <thead class='bg-primary' style='color:white;'>
             <th></th>
@@ -367,7 +372,8 @@ function pairwiseComparisonMatrix($data)
                 <td><input name='v2vp' id='v2vp' type='number' class='form-control' readonly></td>
             </tr>
         </tbody>
-    </table>";
+    </table>
+    </div>";
 
     $table_critetions = generateMatrixVarCriterions($data);
 

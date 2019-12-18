@@ -31,12 +31,11 @@
 
                         <div>
 
-                            <p style="font-size: 1.2em;" class="text-gray-700">1. Crear la matriz pareada de comparación.</p>
                             <div class="col-md-9 offset-md-1">
                                 <!-- Default Card Example -->
                                 <div class="card mb-4">
                                     <div class="card-header">
-                                        Pairwise Comparisons
+                                        AHP Player Calculator
                                     </div>
                                     <div class="card-body">
                                         <form action="controllers/analytic_h_processController.php" method="POST" id="form_pairwise_comp_matrix">
@@ -44,7 +43,7 @@
 
                                             <div class="row">
                                                 <div class="col-md-4" style="margin-top: 7px">
-                                                    <label for="explain_var" class="float-right">Explain Variable 1:</label>
+                                                    <label for="explain_var" class="float-right text-primary">Explain Variable 1:</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <input type="text" placeholder="Enter Text" class="form-control" name="explain_var" id="explain_var" required>
@@ -74,7 +73,7 @@
                                             <hr class="sidebar-divider" style="margin-top: 20px; margin-bottom: 20px;">
                                             <div class="row" style="margin-top: 20px">
                                                 <div class="col-md-4" style="margin-top: 7px">
-                                                    <label for="explain_var2" class="float-right">Explain Variable 2:</label>
+                                                    <label for="explain_var2" class="float-right text-primary">Explain Variable 2:</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <input type="text" placeholder="Enter Text" class="form-control" name="explain_var2" id="explain_var2" required>
