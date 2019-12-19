@@ -1,4 +1,8 @@
 // IIFE - Immediately Invoked Function Expression
+var group_inputs_var1;
+var group_inputs_var2;
+var group_inputs_invar1;
+var group_inputs_invar2;
 (function (yourcode) {
 
     // The global jQuery object is passed as a parameter
@@ -10,6 +14,8 @@
 
     // Listen for the jQuery ready event on the document
     $(function () {
+
+
 
         // $('#input_vars').on('change', function () {
         //     debugger
@@ -28,21 +34,21 @@
                 let alternatives = parseInt($("#num_criters1").val());
                 table_alternatives = '<h4 class="text-center text-primary" style="text-decoration:underline; margin-bottom: 25px; margin-top: 20px;">Customize Criterions </h4>';
                 for (let index = 0; index < alternatives; index++) {
-                    let criterion = "criterion"+index;
+                    let criterion = "criterion" + index;
                     table_alternatives = table_alternatives + '' +
                         '<div class="row">' +
-                        '   <div class="col-md-4"></div> '+
+                        '   <div class="col-md-4"></div> ' +
                         '   <div class="col-md-4">' +
                         '       <input class="form-control" type="text" name="alternative[]" placeholder="Ingress Criterion´s name" required>' +
                         '   </div>' +
-                        '   <div class="col-md-4" style="margin-bottom:5px;">'+
-                        '       <div class="radio">'+
-                        '           <label><input type="radio" name="'+criterion+'" checked>Cualitative</label>'+
-                        '       </div>'+
-                        '       <div class="radio">'+
-                        '           <label><input type="radio" name="'+criterion+'">Cuantitative</label>'+
-                        '       </div>'+
-                        '   </div> '+
+                        '   <div class="col-md-4" style="margin-bottom:5px;">' +
+                        '       <div class="radio">' +
+                        '           <label><input type="radio" name="' + criterion + '" checked>Cualitative</label>' +
+                        '       </div>' +
+                        '       <div class="radio">' +
+                        '           <label><input type="radio" name="' + criterion + '">Cuantitative</label>' +
+                        '       </div>' +
+                        '   </div> ' +
                         '</div>';
                 }
             }
@@ -55,7 +61,7 @@
                 let alternatives = parseInt($("#num_criters2").val());
                 table_alternatives2 = '<h4 class="text-center text-primary" style="text-decoration:underline; margin-bottom: 25px; margin-top: 20px;">Customize Criterions </h4>';
                 for (let index = 0; index < alternatives; index++) {
-                    let criterion = "criterion"+index;
+                    let criterion = "criterion" + index;
                     table_alternatives2 = table_alternatives2 + '' +
                         '<div class="row">' +
                         '   <div class="col-md-4" style="margin-top: 10px">' +
@@ -63,14 +69,14 @@
                         '   <div class="col-md-4">' +
                         '    <input class="form-control" type="text" name="alternative2[]" placeholder="Ingress Criterion´s name" required>' +
                         '   </div>' +
-                        '   <div class="col-md-4" style="margin-bottom:5px;">'+
-                        '       <div class="radio">'+
-                        '           <label><input type="radio" name="'+criterion+'" checked>Cualitative</label>'+
-                        '       </div>'+
-                        '       <div class="radio">'+
-                        '           <label><input type="radio" name="'+criterion+'">Cuantitative</label>'+
-                        '       </div>'+
-                        '   </div> '+
+                        '   <div class="col-md-4" style="margin-bottom:5px;">' +
+                        '       <div class="radio">' +
+                        '           <label><input type="radio" name="' + criterion + '" checked>Cualitative</label>' +
+                        '       </div>' +
+                        '       <div class="radio">' +
+                        '           <label><input type="radio" name="' + criterion + '">Cuantitative</label>' +
+                        '       </div>' +
+                        '   </div> ' +
                         '</div>';
                 }
             }
@@ -86,12 +92,18 @@
                 data: $(this).serialize()
             }).done(function (data) {
                 console.log(data);
+                group_inputs_var1 = data.table_criterion.items[0];
+                group_inputs_var2 = data.table_criterion.items[1];
+                group_inputs_invar1 = data.table_criterion.items_invert[0];
+                group_inputs_invar2 = data.table_criterion.items_invert[1];
+                debugger
                 $("#card_pair_waise_main_matrix").html(data.table_main);
                 let cadena_tables = "";
-                $.each(data.table_criterion, function (index, value) {
+                $.each(data.table_criterion.tables_criterion, function (index, value) {
                     cadena_tables = cadena_tables + value;
                 });
                 $("#pair_waise_all_matrix_criterions").html(cadena_tables);
+
             });
         });
 

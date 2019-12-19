@@ -9,34 +9,6 @@ $probability = false;
 unset($data['funcion']);
 $function($data);
 
-function sensitivityAnalisis($data)
-{
-    $data_matrix = $data['data'];
-    if (!empty($data['name_alternative'])) {
-        $names = $data['name_alternative'];
-        $data_graphic = dataGraphic($data_matrix, $names);
-        $data_graphic = getNamesAlternatives($names, $data_graphic);
-    } else {
-        $data_graphic = dataGraphic($data_matrix);
-    }
-    // print_r($data_graphic);
-    // die;
-    echo json_encode($data_graphic);
-}
-
-function calcEMV($data, $probability)
-{
-    foreach ($data as $key => $value) {
-        $sum = 0;
-        foreach ($value as $key_col => $value_col) {
-            $result = (float) $value_col * $probability[$key_col];
-            $sum = $sum + $result;
-        }
-        $emv[$key] = $sum;
-        $data[$key]['EMV'] = $sum;
-    }
-    return $emv;
-}
 
 function getNamesAlternatives($name_alternatives, $data_graphic)
 {
@@ -50,62 +22,6 @@ function getNamesAlternatives($name_alternatives, $data_graphic)
     return $data_graphic;
 }
 
-function tableEmv($data)
-{
-    $headers_col = getHeaders($data['A1']);
-    $table = "<table class='table'>";
-
-    $table .= "<tr>";
-    $table .= "<td> Alternatives Desicion </td>";
-    foreach ($headers_col as $key => $value) {
-        $table .= "<td> <h3> $value </h3> </td>";
-    }
-    $table .= "</tr>";
-    foreach ($data as $key => $value) {
-        $table .= "<tr>";
-        $table .= "<td> $key </td>";
-        foreach ($value as $key_col => $value_col) {
-            $table .= "<td> $value_col </td>";
-        }
-        $table .= "</tr>";
-    }
-    $table .= "<table>";
-    return $table;
-}
-
-function dataGraphic($data, $names = false)
-{
-    $headers_col = getHeaders($data['Alternative1']);
-    unset($headers_col['EMV']);
-    $prob = [];
-    $probalities = [];
-    for ($i = 0; $i < 11; $i++) {
-        $pro = array();
-        $prob1 = $i / 10;
-        $probalities[] = $i / 10;
-        $pro[] = $prob1;
-        $pro[] = 1 - $prob1;
-        foreach ($headers_col as $key_col => $value_col) {
-            $prob[$value_col] = $pro[$key_col];
-        }
-        $emv_arr[] = calcEMV($data, $prob);
-    }
-    $arr_balanced = getAlternativeOver0($emv_arr);
-    $cont = 0;
-    foreach ($data as $key => $value) {
-        $plot[$cont]['y'] = array_column($emv_arr, $key);
-        $plot[$cont]['x'] = $probalities;
-        $plot[$cont]['mode'] = "lines+markers";
-        if ($names !== false) {
-            $plot[$cont]['name'] = $names[$key];
-        } else {
-            $plot[$cont]['name'] = $key;
-        }
-        $cont++;
-    }
-
-    return ['plot' => $plot, 'balanced' => $arr_balanced['balanced_alternatives']];
-}
 
 function init0Array($data)
 {
@@ -115,6 +31,7 @@ function init0Array($data)
     }
     return $ceros;
 }
+
 function getAlternativeOver0($data)
 {
     $positive_arr = init0Array($data[0]);
@@ -147,38 +64,6 @@ function getHeaders($data)
     return $headers;
 }
 
-function encontrarMayores($data)
-{
-    $mayores = [];
-    $index = [];
-    foreach ($data as $key => $value_index) {
-        foreach ($value_index as $key => $value) {
-            $index[$key] = $key;
-        }
-    }
-    foreach ($index as $key => $value) {
-        $mayores_arr[$key] = array_column($data, $value);
-    }
-    foreach ($mayores_arr as $key => $value) {
-        $mayores[$key] = mayor($value);
-    }
-
-    foreach ($data as $key => $value) {
-        foreach ($value as $key_col => $value_col) {
-            $result[$key][] = $mayores[$key_col] - $value_col;
-        }
-    }
-    $table = "<div class='table-responsive'><table class='table'>";
-    foreach ($result as $key => $value) {
-        $table .= "<tr>";
-        foreach ($value as $key_col => $value_col) {
-            $table .= "<td>" . $value_col . "</td>";
-        }
-        $table .= "</tr>";
-    }
-    $table .= "</table></div>";
-    echo json_encode($table);
-}
 
 function matrixRegreat($mayor_a, $mayor_b, $a, $b)
 {
@@ -197,9 +82,13 @@ function matrixRegreat($mayor_a, $mayor_b, $a, $b)
 function generateMatrixVarCriterions($data){
     // print_r($data);
     // die;
+    $items_var1 = [];
+    $items_var2 = [];
     $var1 = $data['explain_var'];
     $var2 = $data['explain_var2'];
     $variable1_criters = $data['num_criters1'];
+    // print_r($variable1_criters);
+    // die;
     $variable2_criters = $data['num_criters2'];
     $variable1_alternative1 = $data['alternative'];
     $variable1_alternative2 = $data['alternative2'];
@@ -233,16 +122,22 @@ function generateMatrixVarCriterions($data){
                                 if($i == $j){
                                     $table_pair_w_criterions .= "
                                 <td><input type='number' class='form-control input_vars' name='cell_1_".$i.$j."' id='cell_1_".$i.$j."' value='1' data-row='$i' data-col='$j' data-prefijo='cell_1_' readonly></td>";
+                                $items_var1[$i][$j]= "cell_1_".$i.$j."";
+                                $items_invar1[$j][$i]= "cell_1_".$i.$j."";
                                 }elseif($j>$i){
                                     $table_pair_w_criterions .= "
-                                <td><input type='number' class='form-control input_vars' name='cell_1_".$i.$j."' id='cell_1_".$i.$j."' data-row='$i' data-col='$j' data-prefijo='cell_1_'></td>";
+                                <td><input type='number' max='9' min='1' class='form-control input_vars' name='cell_1_".$i.$j."' id='cell_1_".$i.$j."' data-row='$i' data-col='$j' data-prefijo='cell_1_'></td>";
+                                $items_var1[$i][$j]= "cell_1_".$i.$j."";    
+                                $items_invar1[$j][$i]= "cell_1_".$i.$j."";    
                                 }else{
                                     $table_pair_w_criterions .= "
                                 <td><input type='number' class='form-control input_vars' name='cell_1_".$i.$j."' id='cell_1_".$i.$j."' data-row='$i' data-col='$j' data-prefijo='cell_1_' readonly></td>";
+                                $items_var1[$i][$j]= "cell_1_".$i.$j."";
+                                $items_invar1[$j][$i]= "cell_1_".$i.$j."";
                                 }
                             }
                             $table_pair_w_criterions .= "
-                                <td><input type='number' class='form-control input_vars' name='cellvp_1_".$i."' id='cellvp_1_".$i."' data-row='$i' readonly><td>
+                                <td><input type='number' class='form-control input_vars' name='vpcell_1_".$i."' id='vpcell_1_".$i."' data-row='$i' readonly></td>
                             </tr>";
                             }     
                     $table_pair_w_criterions .= "            
@@ -261,11 +156,43 @@ function generateMatrixVarCriterions($data){
             let value = parseFloat(element.val());
             let selector = '#'+prefijo+''+col+''+row;
             $(selector).val(1/value)
+            let blank_input = 0;
+            let matrix_column = new Array();
+            let matrix_sum = new Array();
+            let matrix_norm = new Array();
+            $.each(group_inputs_invar1, function (index, value) {
+                let sum=0;
+                $.each(value, function (indexcol, valuecol) {
+                    matrix_column=valuecol;
+                    let selector = '#' + valuecol;
+                    let vali = parseFloat($(selector).val());
+                    if ($(selector).val() == '') {
+                        blank_input++;        
+                    }else{
+                        sum = sum + vali;
+                    } 
+                });
+                matrix_sum.push(sum)
+            });
+
+            //Matriz Normalizada
+            let vp = new Array();
+            $.each(group_inputs_var1, function (index, value) {
+                let vali;
+                let sum=0;
+                $.each(value, function (indexcol, valuecol) {
+                    matrix_column=valuecol;
+                    let selector = '#' + valuecol;
+                    let valc = parseFloat($(selector).val());
+                    sum = sum + valc/matrix_sum[indexcol];
+                });
+                let selectvp = '#vpcell_1_'+index;
+                $(selectvp).val(sum/group_inputs_var1[index].length)
+            });
         });
         </script>";
     }
     $tables[]=$table_pair_w_criterions;
-
 
 
     for ($w = 0; $w < $variable2_criters ; $w++) { 
@@ -295,17 +222,23 @@ function generateMatrixVarCriterions($data){
                             for ($j = 0; $j < $variable2_criters; $j++) { 
                                 if($i == $j){
                                     $table_pair_w_criterions .= "
-                                <td><input type='number' class='form-control input_vars' name='cell_2_".$i.$j."' id='cell_2_".$i.$j."' value='1' data-row='$i' data-col='$j' data-prefijo='cell_2_' readonly></td>";
+                                <td><input type='number' class='form-control input_vars2' name='cell_2_".$i.$j."' id='cell_2_".$i.$j."' value='1' data-row='$i' data-col='$j' data-prefijo='cell_2_' readonly></td>";
+                                $items_var2[$i][$j]="cell_2_".$i.$j;
+                                $items_invar2[$j][$i]= "cell_2_".$i.$j."";
                                 }elseif($j>$i){
                                     $table_pair_w_criterions .= "
-                                <td><input type='number' class='form-control input_vars' name='cell_2_".$i.$j."' id='cell_2_".$i.$j."' data-row='$i' data-col='$j' data-prefijo='cell_2_'></td>";
+                                <td><input type='number' max='9' min='1' class='form-control input_vars2' name='cell_2_".$i.$j."' id='cell_2_".$i.$j."' data-row='$i' data-col='$j' data-prefijo='cell_2_'></td>";
+                                $items_var2[$i][$j]="cell_2_".$i.$j;
+                                $items_invar2[$j][$i]= "cell_2_".$i.$j."";
                                 }else{
                                     $table_pair_w_criterions .= "
-                                <td><input type='number' class='form-control input_vars' name='cell_2_".$i.$j."' id='cell_2_".$i.$j."' data-row='$i' data-col='$j' data-prefijo='cell_2_' readonly></td>";
+                                <td><input type='number' class='form-control input_vars2' name='cell_2_".$i.$j."' id='cell_2_".$i.$j."' data-row='$i' data-col='$j' data-prefijo='cell_2_' readonly></td>";
+                                $items_var2[$i][$j]="cell_2_".$i.$j;
+                                $items_invar2[$j][$i]= "cell_2_".$i.$j."";
                                 }
                             }
                             $table_pair_w_criterions .= "
-                                <td><input type='number' class='form-control input_vars' name='cellvp_2_".$i."' id='cellvp_".$i."' data-row='$i' readonly><td>
+                                <td><input type='number' class='form-control input_vars2' name='vpcell_2_".$i."' id='vpcell_".$i."' data-row='$i' readonly></td>
                             </tr>";
                             }     
                     $table_pair_w_criterions .= "            
@@ -314,12 +247,60 @@ function generateMatrixVarCriterions($data){
                     </div>
                 </div>   
             </div>
-        </div>";
+        </div>
+        <script>
+        $('.input_vars2').on('change', function () {
+            let element = $(this)
+            let col = element.data('col');
+            let row = element.data('row');
+            let prefijo = element.data('prefijo');
+            let value = parseFloat(element.val());
+            let selector = '#'+prefijo+''+col+''+row;
+            $(selector).val(1/value)
+            let blank_input = 0;
+            let matrix_column = new Array();
+            let matrix_sum = new Array();
+            let matrix_norm = new Array();
+            $.each(group_inputs_invar2, function (index, value) {
+                let sum=0;
+                $.each(value, function (indexcol, valuecol) {
+                    matrix_column=valuecol;
+                    let selector = '#' + valuecol;
+                    let vali = parseFloat($(selector).val());
+                    if ($(selector).val() == '') {
+                        blank_input++;        
+                    }else{
+                        sum = sum + vali;
+                    } 
+                });
+                matrix_sum.push(sum)
+            });
+
+            //Matriz Normalizada
+            let vp = new Array();
+            $.each(group_inputs_var2, function (index, value) {
+                let vali;
+                let sum=0;
+                $.each(value, function (indexcol, valuecol) {
+                    matrix_column=valuecol;
+                    let selector = '#' + valuecol;
+                    let valc = parseFloat($(selector).val());
+                    sum = sum + valc/matrix_sum[indexcol];
+                });
+                let selectvp = '#vpcell_2_'+index;
+                $(selectvp).val(sum/group_inputs_var1[index].length)
+            });
+        });
+        </script>";
     }
-    $tables[]=$table_pair_w_criterions;
-    // print_r($tables);
-    // die;
-    return $tables;
+    $tables[] = $table_pair_w_criterions;
+    $result['tables_criterion'] = $tables;
+    $result['items'][] = $items_var1;
+    $result['items_invert'][] = $items_invar1;
+    $result['items'][] = $items_var2; 
+    $result['items_invert'][] = $items_invar2; 
+
+    return $result;
 }
 
 function pairwiseComparisonMatrix($data)
@@ -376,7 +357,6 @@ function pairwiseComparisonMatrix($data)
     </div>";
 
     $table_critetions = generateMatrixVarCriterions($data);
-
     echo json_encode([
         'table_main'=>$table_pair_w_main,
         'table_criterion'=>$table_critetions
