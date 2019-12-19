@@ -238,7 +238,7 @@ function generateMatrixVarCriterions($data){
                                 }
                             }
                             $table_pair_w_criterions .= "
-                                <td><input type='number' class='form-control input_vars2' name='vpcell_2_".$i."' id='vpcell_".$i."' data-row='$i' readonly></td>
+                                <td><input type='number' class='form-control input_vars2' name='vpcell_2_".$i."' id='vpcell_2_".$i."' data-row='$i' readonly></td>
                             </tr>";
                             }     
                     $table_pair_w_criterions .= "            
@@ -275,14 +275,13 @@ function generateMatrixVarCriterions($data){
                 });
                 matrix_sum.push(sum)
             });
-
             //Matriz Normalizada
             let vp = new Array();
             $.each(group_inputs_var2, function (index, value) {
                 let vali;
-                let sum=0;
+                let sum = 0;
                 $.each(value, function (indexcol, valuecol) {
-                    matrix_column=valuecol;
+                    matrix_column = valuecol;
                     let selector = '#' + valuecol;
                     let valc = parseFloat($(selector).val());
                     sum = sum + valc/matrix_sum[indexcol];
